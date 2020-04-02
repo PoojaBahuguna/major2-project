@@ -1,0 +1,21 @@
+---
+#
+# Installing Kibana
+#
+
+# Install Kibana 
+
+- name: Install Logstash with apt
+  apt:
+   name: logstash-oss
+   update_cache: yes
+ 
+# Configurations
+
+# Starting Kibana
+
+- name: Starting Logstash
+  service:
+   name: logstash
+   state: restarted
+   enabled: yes

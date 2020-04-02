@@ -1,0 +1,78 @@
+---
+#
+# Installing Kibana
+#
+
+# Install Kibana 
+
+- name: Install Kibana with apt
+  apt:
+   name: kibana-oss
+   update_cache: yes
+ 
+# Configurations
+
+- name: Updating the config file to allow outside access
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'server.host:'
+   line: 'server.host: 0.0.0.0'
+
+- name: Defining server port
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'server.port:'
+   line: 'server.port: 5601'
+    
+- name: Defining Elasticsearch URL
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'elasticsearch.hosts:'
+   line: 'elasticsearch.hosts: "http://localhost:9200"'
+
+- name: Defining logging destination
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'logging.dest:'
+   line: 'logging.dest: /var/log/kibana/kibana.log'  
+
+- name: Creates directory
+  file:
+   path: /var/log/kibana
+   state: directory
+   owner: kibana
+   group: kibana
+   mode: '775'
+
+# Starting Kibana
+
+- name: Starting Kibana
+  service:
+   name: kibana
+   state: restarted
+   enabled: yes
+
+
+- name: Sleeping for 120 seconds
+  wait_for:
+    timeout: 120
+
+- name: Setting Kibana Dark Mode
+  uri:
+    url: http://localhost:5601/api/kibana/settings/theme:darkMode
+    method: POST
+    body: '{"value":"true"}'
+    body_format: json
+    headers:
+      Content-Type: "application/json"
+      kbn-xsrf: "true"
+
+- name: Setting Kibana Day Of Week
+  uri:
+    url: http://localhost:5601/api/kibana/settings/dateFormat:dow
+    method: POST
+    body: '{"value":"Monday"}'
+    body_format: json
+    headers:
+      Content-Type: "application/json"
+      kbn-xsrf: "true"

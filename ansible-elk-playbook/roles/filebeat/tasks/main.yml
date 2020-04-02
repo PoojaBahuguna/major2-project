@@ -1,0 +1,27 @@
+---
+#
+# Installing Filebeat
+#
+
+# Install Filebeat 
+
+- name: Install Filebeat with apt
+  apt:
+   name: filebeat
+   update_cache: yes
+   
+# Copy config file                                                                                                                                                                                                           
+
+- name: Copy file with owner and permissions
+  copy:
+    src: filebeat-reference.yml
+    dest: /etc/filebeat/filebeat.yml
+    mode: '0644'
+
+# Starting Filebeat
+
+- name: Starting Filebeat
+  service:
+   name: filebeat
+   state: restarted
+   enabled: yes

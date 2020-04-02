@@ -1,0 +1,12 @@
+---
+#
+# Installing Java 8
+#
+
+# Install Java 
+
+- name: Install Java 8
+  apt:
+   name: openjdk-8-jre-headless
+   state: present
+   update_cache: yes
