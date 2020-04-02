@@ -1,0 +1,5 @@
+- name: variable precedence
+  hosts: all
+  gather_facts: false
+  roles:
+          - var_precedence

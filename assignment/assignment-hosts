@@ -1,0 +1,2 @@
+[assignment_hosts]
+52.205.45.132 ansible_user=ubuntu

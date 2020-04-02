@@ -1,0 +1,11 @@
+- name: Playing book
+  hosts: all
+  gather_facts: false
+  tasks:
+          - name: using loops copy miltiple files
+            copy:
+                    src: "{{ item }}"
+                    dest: /home/ubuntu
+            loop:
+                    - file1
+                    - file2

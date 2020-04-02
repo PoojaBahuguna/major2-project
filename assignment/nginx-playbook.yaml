@@ -1,0 +1,17 @@
+- name: Nginx Installation and status check
+  hosts: all
+  gather_facts: false
+  become: yes
+  tasks:
+          - name: Update cache
+            apt:
+                    update_cache: yes
+          - name: Installing Nginx
+            apt:
+                    name: nginx
+          - name: Status Check
+            command: service nginx status
+            register: output
+          - name: debug
+            debug:
+                    var: output
