@@ -1,5 +1,5 @@
 ---
-  - name: Provision an EC2 Instance. Detailed steps by Crunchify.
+  - name: Provision an EC2 Instance.
     hosts: local
     connection: local
     gather_facts: False
@@ -7,9 +7,10 @@
     # required parameters
     vars:
       instance_type: t3.medium
-      security_group: chirag-project-sg
+      security_group: chirag_project_sg
       image: ami-07ebfd5b3428b6f4d
       keypair: Chirag-Pem
+      vpc_subnet_id: subnet-070c80956ba0dde0a
       region: us-east-1 # Change the Region
       count: 1
  
@@ -20,8 +21,9 @@
         local_action: 
           module: ec2_group
           name: "{{ security_group }}"
-          description: Security Group for Crunchify's EC2 Servers
+          description: Chirag SG
           region: "{{ region }}"
+          vpc_id: vpc-0b061c711cd6ec803
           rules:
             - proto: tcp
               from_port: 22
@@ -44,16 +46,18 @@
               cidr_ip: 0.0.0.0/0
         register: basic_firewall
         
-      - name: Launching Crunchify's the new EC2 Instance
+      - name: Launching Chirag's new EC2 Instance
         local_action: ec2 
                       group={{ security_group }} 
                       instance_type={{ instance_type}} 
                       image={{ image }} 
                       wait=true
                       wait_timeout=500 
-                      region={{ region }} 
+                      region={{ region }}
+                      vpc_subnet_id={{ vpc_subnet_id}}
                       keypair={{ keypair }}
                       count={{count}}
+                      assign_public_ip=yes
         register: ec2_chirag
  
       - name: Add the newly created EC2 instance(s) to the local host group
