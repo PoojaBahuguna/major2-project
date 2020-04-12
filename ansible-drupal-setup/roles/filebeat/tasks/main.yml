@@ -1,0 +1,40 @@
+---
+#
+# Installing Filebeat
+#
+# Add Elasticsearch apt key
+
+- name: Add Elasticsearch apt key
+  apt_key:
+   url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
+   state: present
+
+# Add the Elasticsearch apt repo. For versions 6 of the stack - use '6.x-prerelease':
+
+- name: Adding Elasticsearch repo
+  apt_repository:
+   repo: deb https://artifacts.elastic.co/packages/oss-7.x/apt stable main
+   state: present
+
+# Install Filebeat 
+
+- name: Install Filebeat with apt
+  apt:
+   name: filebeat
+   update_cache: yes
+   
+# Copy config file                                                                                                                                                                                                           
+
+- name: Copy file with owner and permissions
+  copy:
+    src: filebeat-reference.yml
+    dest: /etc/filebeat/filebeat.yml
+    mode: '0644'
+
+# Starting Filebeat
+
+- name: Starting Filebeat
+  service:
+   name: filebeat
+   state: restarted
+   enabled: yes

@@ -1,0 +1,17 @@
+---
+- hosts: web-server
+  gather_facts: true
+  become: true
+  tasks:
+  - name: update and upgrade system packages
+    apt:
+      update_cache: yes
+
+- hosts: web-server
+  become: true
+  roles:
+    - mariadb
+    - php
+    - drupal
+    - nginx
+    - filebeat

@@ -1,4 +1,0 @@
-web-server ansible_ssh_host=3.82.176.221 ansible_user=ubuntu
-
-[all:vars]
-ansible_python_interpreter=/usr/bin/python3

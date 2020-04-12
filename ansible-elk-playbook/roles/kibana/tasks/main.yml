@@ -7,7 +7,7 @@
 
 - name: Install Kibana with apt
   apt:
-   name: kibana-oss
+   name: kibana
    update_cache: yes
  
 # Configurations

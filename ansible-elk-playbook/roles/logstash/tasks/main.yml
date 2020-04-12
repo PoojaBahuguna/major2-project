@@ -1,18 +1,27 @@
 ---
 #
-# Installing Kibana
+# Installing Logstash
 #
 
-# Install Kibana 
+# Install logstash
 
 - name: Install Logstash with apt
   apt:
-   name: logstash-oss
+   name: logstash
    update_cache: yes
  
 # Configurations
 
-# Starting Kibana
+- name: Configure filebeat input
+  template: src=filebeat-input.conf dest=/etc/logstash/conf.d/filebeat-input.conf
+
+- name: Configure syslog filter
+  template: src=syslog-filter.conf dest=/etc/logstash/conf.d/syslog-filter.conf
+
+- name: Configure elasticsearch output
+  template: src=elasticsearch-output.conf dest=/etc/logstash/conf.d/elasticsearch-output.conf
+
+# Starting logstash
 
 - name: Starting Logstash
   service:

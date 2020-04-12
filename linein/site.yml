@@ -1,9 +1,0 @@
-- name: Ec2
-  hosts: localhost
-  gather_facts: false
-  tasks:
-          - name: line
-            lineinfile:
-                path=~/MyPlaybooks/linein/chirag.txt
-                regexp="web-server"
-                line="web-server ansible_ssh_user=127.0.0.1 ansible_user=ubuntu"

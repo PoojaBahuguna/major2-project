@@ -1,3 +1,0 @@
-- name:  checking
-  debug:
-          msg: "port is {{ ports }}"

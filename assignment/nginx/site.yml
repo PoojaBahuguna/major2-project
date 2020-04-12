@@ -1,8 +1,0 @@
----
-
-- name: Nginx Installation and custom conf and index files
-  hosts: all
-  gather_facts: true
-  become: yes
-  roles:
-          - custom-nginx

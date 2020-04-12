@@ -1,2 +1,0 @@
-54.89.253.39 ansible_user=ubuntu
-3.92.50.14 ansible_user=ubuntu
